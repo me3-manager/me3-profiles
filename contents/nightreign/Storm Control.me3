@@ -7,4 +7,4 @@ game = "nightreign"
 
 [[natives]]
 nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/146"
-config = ["Storm Control/StormControl/config.ini", "Storm Control/StormControl/profiles/NightfarerBots.ini"]
+config = ["Storm Control/StormControl/config.ini", "Storm Control/StormControl/profiles/Example.ini"]
