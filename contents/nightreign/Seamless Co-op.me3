@@ -1,0 +1,9 @@
+profileVersion = "v1"
+description = "Seamless Co-op with load_early profile test"
+
+
+[[natives]]
+# Seamless Co-op (Nightreign)
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/3"
+load_early = true
+config = "Seamless Co-op (Nightreign)/SeamlessCoop/nrsc_settings.ini"
