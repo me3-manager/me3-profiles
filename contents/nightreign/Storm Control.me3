@@ -1,0 +1,10 @@
+profileVersion = "v1"
+description = "Storm Control with a two-part setup—config and profile, so both configurations appear in the mod config editor."
+
+
+[[supports]]
+game = "nightreign"
+
+[[natives]]
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/146"
+config = ["Storm Control/StormControl/config.ini", "Storm Control/StormControl/profiles/NightfarerBots.ini"]
