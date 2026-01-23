@@ -1,6 +1,5 @@
 profileVersion = "v1"
-description = "Seamless Co-op with load_early profile test"
-image_link = "https://staticdelivery.nexusmods.com/mods/7800/images/3/3-1748613196-728917240.png"
+description = "Seamless Co-op with load_early"
 
 
 [[natives]]
