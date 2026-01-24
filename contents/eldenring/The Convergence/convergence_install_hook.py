@@ -7,15 +7,36 @@ log = logging.getLogger(__name__)
 def on_post_install(context):
     """
     Post-install hook for Convergence ER.
-
     Goals:
-    1. Organize DLLs/configs into a 'dll' folder.
-    2. Flatten 'mod' folder contents to the root.
-    3. Cleanup unused folders (modengine2, Resources).
+    1. Locate 'ConvergenceER/mod' folder.
+    2. Move specific DLLs/configs from 'mod' to 'mod/dll'.
+    3. Move ALL contents of 'mod' to the root (flattening 'mods_dir/ConvergenceER').
+    4. Delete the original 'ConsergenceER' container (if path structure created one) or just the empty 'mod' folder.
     """
     mods_dir = context["mods_dir"]
+    log.info("[Convergence Hook] Starting post-install in: %s", mods_dir)
 
-    # Files to move into the 'dll' subfolder
+    # 1. Locate the inner content folder
+    # We expect: mods_dir / "The Convergence" / "ConvergenceER" / "mod"
+    # Or just: mods_dir / "ConvergenceER" / "mod"
+
+    # Let's search for "ConvergenceER"
+    convergence_root = _find_convergence_folder(mods_dir)
+    if not convergence_root:
+        log.warning("[Convergence Hook] Could not find ConvergenceER folder.")
+        return
+
+    mod_content_dir = convergence_root / "mod"
+    if not mod_content_dir.exists():
+        log.warning("[Convergence Hook] 'mod' folder not found at: %s", mod_content_dir)
+        return
+
+    log.info("[Convergence Hook] Found content at: %s", mod_content_dir)
+
+    # 2. Create 'dll' folder inside 'mod' and move specific files
+    dll_dir = mod_content_dir / "dll"
+    dll_dir.mkdir(exist_ok=True)
+
     dll_files = [
         "altsaves.toml",
         "CMI.dll",
@@ -29,41 +50,26 @@ def on_post_install(context):
         "Scripts-Data-Exposer-FS.dll",
     ]
 
-    # Find the Convergence folder
-    # We look for a folder that likely contains the mod structure
-    target_folder = _find_convergence_folder(mods_dir)
-
-    if not target_folder:
-        log.warning("[Convergence Hook] Could not find Convergence folder.")
-        return
-
-    log.info("[Convergence Hook] Processing %s", target_folder.name)
-
-    mod_dir = target_folder / "mod"
-
-    if not mod_dir.exists():
-        log.warning("[Convergence Hook] 'mod' folder not found in %s", target_folder)
-        return
-
-    # 1. Create 'dll' folder and move files
-    dll_dir = mod_dir / "dll"
-    dll_dir.mkdir(exist_ok=True)
-
-    log.info("[Convergence Hook] Moving DLLs to %s", dll_dir)
-    for file_name in dll_files:
-        src = mod_dir / file_name
+    for fname in dll_files:
+        src = mod_content_dir / fname
         if src.exists():
-            dst = dll_dir / file_name
+            dst = dll_dir / fname
             shutil.move(str(src), str(dst))
-        else:
-            log.debug("File not found: %s", file_name)
 
-    # 2. Flatten: Move everything from 'mod' to root
-    log.info("[Convergence Hook] Flattening 'mod' folder to root")
-    for item in mod_dir.iterdir():
-        dest = target_folder / item.name
+    # 3. Flatten!
+    # We want the CONTENTS of 'mod' to become the contents of 'The Convergence' (the root of this mod installation)
 
-        # If destination exists, remove it first to avoid collision errors
+    # The "root" of this mod installation is usually `convergence_root.parent` if the user installed it via a profile
+    # named "The Convergence" which put files into "The Convergence" folder.
+
+    # If the structure is: .../The Convergence/ConvergenceER/mod
+    # We want: .../The Convergence/[contents of mod]
+
+    install_root = convergence_root.parent
+    log.info("[Convergence Hook] Flattening to: %s", install_root)
+
+    for item in mod_content_dir.iterdir():
+        dest = install_root / item.name
         if dest.exists():
             if dest.is_dir():
                 shutil.rmtree(dest)
@@ -72,35 +78,31 @@ def on_post_install(context):
 
         shutil.move(str(item), str(dest))
 
-    # 3. Cleanup
-    # Remove empty 'mod' folder
-    if mod_dir.exists():
-        shutil.rmtree(mod_dir)
-
-    # Remove unused folders provided by the download
-    for unused in ["modengine2", "Resources"]:
-        unused_path = target_folder / unused
-        if unused_path.exists():
-            shutil.rmtree(unused_path)
-            log.info("Removed unused folder: %s", unused)
-
-    log.info("[Convergence Hook] Installation cleanup complete.")
+    # 4. Cleanup
+    # Remove the now empty 'mod' folder and its parent 'ConvergenceER'
+    try:
+        shutil.rmtree(convergence_root)
+        log.info("[Convergence Hook] Cleanup successful")
+    except Exception as e:
+        log.warning("Cleanup failed: %s", e)
 
 
 def _find_convergence_folder(base_path):
     """
-    Helper to find the main Convergence folder.
-    Prioritizes 'ConvergenceER' but accepts variations if necessary.
+    Search recursively for a folder named 'ConvergenceER' that contains a 'mod' subfolder.
     """
-    # 1. Direct check
-    candidate = base_path / "ConvergenceER"
-    if candidate.exists() and candidate.is_dir():
-        return candidate
-
-    # 2. Search for any folder starting with Convergence containing a 'mod' subfolder
+    # Check immediate children first
     for child in base_path.iterdir():
-        if child.is_dir() and "convergence" in child.name.lower():
-            if (child / "mod").exists():
+        if child.is_dir():
+            if child.name == "ConvergenceER" and (child / "mod").exists():
                 return child
+            # Also check if we are already inside? No, base_path is mods_dir
+
+    # Check 1 level deep (common if unzipped into a folder)
+    for child in base_path.iterdir():
+        if child.is_dir():
+            possible = child / "ConvergenceER"
+            if possible.exists() and (possible / "mod").exists():
+                return possible
 
     return None
