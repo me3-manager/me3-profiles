@@ -102,6 +102,10 @@ def on_post_install(context):
 ## 6. Contributing
 We use [uv](https://github.com/astral-sh/uv) for Python project management and [Ruff](https://github.com/astral-sh/ruff) for linting.
 
+> [!NOTE]
+> **Only required if you are including a Python install script.**
+> If you are only submitting a `.me3` profile without a custom script, you do not need to install `uv` or run these checks.
+
 ### Running CI Checks Locally
 To verify your changes before submitting a pull request, you can run the linter locally:
 
