@@ -30,5 +30,71 @@ nexus_link = "https://www.nexusmods.com/eldenring/mods/541"
 mod_folder = "path/to/mod"
 ```
 
-### 4. Submitting Your Profile
+## 4. Submitting Your Profile
 Contributions are welcome! Feel free to submit them via pull requests.
+
+## 5. Advanced: Custom Install Scripts
+For complex mods that require specific installation logic (like moving files, cleaning up folders, or dynamic configuration), you can bundle a Python script with your profile.
+
+### Enabling the Script
+Add a `[metadata]` section to your `.me3` file and point to your script file:
+
+```toml
+[metadata]
+install_script = "install_hook.py"
+```
+
+Ensure `install_hook.py` is included in the same folder as your `.me3` file (or in the same directory if submitting a PR).
+
+### Script Structure
+The script works by defining "hooks" that ME3 Manager calls at specific points. It runs using the manager's internal Python environment.
+
+**Available Hooks:**
+- `on_prepare_install(context)`: Runs *before* the main installation. Return `False` to cancel.
+- `on_post_install(context)`: Runs *after* all files have been installed (but before the transaction is finalized).
+
+**The `context` Dictionary:**
+The `context` argument provides useful information:
+- `mods_dir`: `Path` object to the game's mods directory.
+- `profile_data`: Dictionary containing the parsed `.me3` profile data.
+- `installed`: List of files/folders that were installed.
+- `game_name`: Name of the game being modified.
+
+### Example Script
+```python
+import logging
+import shutil
+from pathlib import Path
+
+log = logging.getLogger(__name__)
+
+def on_post_install(context):
+    """
+    Example: Flatten a nested folder structure after install.
+    """
+    mods_dir = context["mods_dir"]
+    log.info("Running post-install script for %s", context["game_name"])
+    
+    # Example logic: Move contents of 'NestedFolder' to root
+    target_dir = mods_dir / "ComplexMod" / "NestedFolder"
+    dest_dir = mods_dir / "ComplexMod"
+    
+    if target_dir.exists():
+        for item in target_dir.iterdir():
+            dest = dest_dir / item.name
+            if dest.exists():
+                if dest.is_dir():
+                    shutil.rmtree(dest)
+                else:
+                    dest.unlink()
+            shutil.move(str(item), str(dest))
+        
+        # Cleanup empty folder
+        shutil.rmtree(target_dir)
+        log.info("Files moved successfully!")
+```
+
+### Important Notes
+- **Libraries**: You can only import modules from the **Python Standard Library** (e.g., `os`, `shutil`, `json`, `re` and **PySide6**. You cannot use external packages like `numpy` or `requests` unless they happen to be bundled with the manager.
+- **Safety**: Users will be prompted to approve the script before it runs.
+- **Logging**: Use `logging.getLogger(__name__)` to write to the application log.
