@@ -15,5 +15,8 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: Run Ruff
+      - name: Run Ruff Lint
         run: uv run ruff check .
+
+      - name: Run Ruff Format
+        run: uv run ruff format --check .
