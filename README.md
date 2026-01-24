@@ -98,3 +98,23 @@ def on_post_install(context):
 - **Libraries**: You can only import modules from the **Python Standard Library** (e.g., `os`, `shutil`, `json`, `re` and **PySide6**. You cannot use external packages like `numpy` or `requests` unless they happen to be bundled with the manager.
 - **Safety**: Users will be prompted to approve the script before it runs.
 - **Logging**: Use `logging.getLogger(__name__)` to write to the application log.
+
+## 6. Contributing
+We use [uv](https://github.com/astral-sh/uv) for Python project management and [Ruff](https://github.com/astral-sh/ruff) for linting.
+
+### Running CI Checks Locally
+To verify your changes before submitting a pull request, you can run the linter locally:
+
+1. **Install uv** (if not already installed):
+   ```bash
+   pip install uv
+   ```
+
+2. **Linting & Formatting**:
+   ```bash
+   # Run linter
+   uv run ruff check .
+
+   # Run formatter
+   uv run ruff format .
+   ```
