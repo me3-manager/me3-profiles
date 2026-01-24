@@ -10,7 +10,6 @@ def on_post_install(context):
     Structure: ModRoot > [contents of mod folder including dll]
     """
     mods_dir = context["mods_dir"]
-    # profile_data = context.get("profile_data", {}) # Unused for now
 
     target_folder = _find_err_folder(mods_dir)
     if not target_folder:
