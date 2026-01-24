@@ -1,0 +1,8 @@
+profileVersion = "v1"
+description = "The Convergence with Install script"
+
+[metadata]
+install_script = "convergence_install_hook.py"
+
+[[packages]]
+nexus_link = "https://www.nexusmods.com/eldenring/mods/3419"
