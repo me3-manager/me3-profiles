@@ -3,4 +3,4 @@ description = "testing ERR with mod_folder setting"
 
 [[packages]]
 nexus_link = "https://www.nexusmods.com/eldenring/mods/541"
-mod_folder = "ERRv2.1.2.3"
+mod_folder = "ERRv2.1.2.3/mod"
