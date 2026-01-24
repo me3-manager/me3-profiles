@@ -44,7 +44,7 @@ def on_post_install(context):
                     shutil.rmtree(dest)
                 else:
                     dest.unlink()
-            
+
             shutil.move(str(item), str(dest))
         moved_success = True
     else:
