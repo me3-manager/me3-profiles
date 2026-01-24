@@ -7,10 +7,10 @@ log = logging.getLogger(__name__)
 def on_post_install(context):
     """
     Post-install cleanup for Elden Ring Reforged.
-    Structure: ModRoot > mod > dll
+    Structure: ModRoot > [contents of mod folder including dll]
     """
     mods_dir = context["mods_dir"]
-    profile_data = context.get("profile_data", {})
+    # profile_data = context.get("profile_data", {}) # Unused for now
 
     target_folder = _find_err_folder(mods_dir)
     if not target_folder:
@@ -20,6 +20,7 @@ def on_post_install(context):
     log.info("[ERR Hook] Processing %s", target_folder.name)
 
     # 1. Move dll -> mod/dll
+    # This prepares the 'mod' folder to have everything we want
     dll_dir = target_folder / "dll"
     mod_dir = target_folder / "mod"
 
@@ -30,22 +31,22 @@ def on_post_install(context):
             shutil.rmtree(dest_dll)
         shutil.move(str(dll_dir), str(dest_dll))
 
-    # 2. Move 'mod' folder to root (flatten)
-    # We want: ModRoot/mod
-    # target_folder is ModRoot/ERRv2.X.X.X
-
+    # 2. Flatten: Move contents of 'mod' folder to root
+    # We want: ModRoot/* (contents of mod)
     root_dir = target_folder.parent
-    final_mod_path = root_dir / "mod"
-
     moved_success = False
 
     if mod_dir.exists():
-        if final_mod_path.exists():
-            # If we are re-installing or it exists, clear the old one to ensure we get the fresh one
-            shutil.rmtree(final_mod_path)
-
-        log.info("Moving mod folder to root: %s", final_mod_path)
-        shutil.move(str(mod_dir), str(final_mod_path))
+        log.info("Flattening structure: Moving contents of %s to %s", mod_dir, root_dir)
+        for item in mod_dir.iterdir():
+            dest = root_dir / item.name
+            if dest.exists():
+                if dest.is_dir():
+                    shutil.rmtree(dest)
+                else:
+                    dest.unlink()
+            
+            shutil.move(str(item), str(dest))
         moved_success = True
     else:
         log.warning(
@@ -53,16 +54,7 @@ def on_post_install(context):
             target_folder.name,
         )
 
-    # 3. Update profile to point to 'mod'
-    # Only if we actually have a 'mod' folder now
-    if final_mod_path.exists():
-        for pkg in profile_data.get("packages", []):
-            pkg["path"] = "mod"
-            pkg["id"] = "Reforged"
-
-    # 4. Clean up the rest (ERRv... folder)
-    # SAFETY: Only delete if we successfully moved the important stuff out,
-    # OR if we are sure we want to delete the leftovers.
+    # 3. Clean up the rest (ERRv... folder)
     if moved_success:
         log.info("Cleaning up old container %s", target_folder.name)
         shutil.rmtree(target_folder)
