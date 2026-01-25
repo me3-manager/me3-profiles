@@ -10,7 +10,7 @@ config = "Seamless Co-op (Dark Souls III)/SeamlessCoop/ds3sc_settings.ini"
 # override some settings in ds3sc_settings.ini
 [natives.config_overrides]
 GAMEPLAY.allow_invaders = 0
-PASSWORD.cooppassword = "testpassword"
+# PASSWORD.cooppassword = "testpassword" let the user set it
 
 
 [[natives]]
