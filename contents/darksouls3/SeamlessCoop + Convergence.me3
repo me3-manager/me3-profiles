@@ -1,0 +1,31 @@
+profileVersion = "v1"
+description = "SeamlessCoop with The Convergence Mod"
+
+
+[[natives]]
+# Seamless Co-op (Dark Souls III)
+nexus_link = "https://www.nexusmods.com/darksouls3/mods/1895"
+config = "Seamless Co-op (Dark Souls III)/SeamlessCoop/ds3sc_settings.ini"
+
+# override some settings in ds3sc_settings.ini
+[natives.config_overrides]
+GAMEPLAY.allow_invaders = 0
+PASSWORD.cooppassword = "testpassword"
+
+
+[[natives]]
+# HoodiePatcher for v1.15.2
+nexus_link = "https://www.nexusmods.com/darksouls3/mods/1933"
+config = "HoodiePatcher for v1.15.2/HoodiePatcher.ini"
+
+[[natives]]
+# DS3 Havok Crash Helper
+nexus_link = "https://www.nexusmods.com/darksouls3/mods/2068"
+mod_folder = "DS3HavokCrashHelper/dist/me3"
+
+[[packages]]
+# The Convergence
+nexus_link = "https://www.nexusmods.com/darksouls3/mods/672"
+nexus_category = "OPTIONAL"
+nexus_file_id = 4766
+mod_folder = "The Convergence"
