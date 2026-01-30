@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Community profiles for me3-manager"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "tomlkit>=0.13.2",
+]
 
 [dependency-groups]
 dev = [

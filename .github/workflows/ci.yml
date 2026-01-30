@@ -20,3 +20,6 @@ jobs:
 
       - name: Run Ruff Format
         run: uv run ruff format --check .
+
+      - name: Validate .me3 Profiles
+        run: uv run scripts/validate_profiles.py
