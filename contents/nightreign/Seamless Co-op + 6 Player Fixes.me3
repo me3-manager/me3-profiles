@@ -1,0 +1,13 @@
+profileVersion = "v1"
+description = "A collection of map, script, and event tweaks for Elden Ring: Nightreign, improving the experience for groups exceeding the default player cap."
+
+
+[[natives]]
+# Seamless Co-op (Nightreign)
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/3"
+load_early = true
+config = "Seamless Co-op (Nightreign)/SeamlessCoop/nrsc_settings.ini"
+
+[[natives]]
+# Nightreign 6 Player Fixes
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/596"
