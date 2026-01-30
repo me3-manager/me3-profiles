@@ -10,7 +10,14 @@ config = "Seamless Co-op (Dark Souls III)/SeamlessCoop/ds3sc_settings.ini"
 # override some settings in ds3sc_settings.ini
 [natives.config_overrides]
 GAMEPLAY.allow_invaders = 0
-# PASSWORD.cooppassword = "testpassword" let the user set it
+
+# Let the user set the password during installation
+[[natives.user_prompts]]
+key = "PASSWORD.cooppassword"
+label = "Co-op Password"
+description = "Set a password to play with your friends (they need to use the same password)"
+type = "string"
+required = true
 
 
 [[natives]]
