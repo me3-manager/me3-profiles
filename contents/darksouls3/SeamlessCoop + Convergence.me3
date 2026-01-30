@@ -28,7 +28,7 @@ config = "HoodiePatcher for v1.15.2/HoodiePatcher.ini"
 [[natives]]
 # DS3 Havok Crash Helper
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/2068"
-mod_folder = "DS3HavokCrashHelper/dist/me3"
+mod_folder = "DS3HavokCrashHelper\dist\me3"
 
 [[packages]]
 # The Convergence
