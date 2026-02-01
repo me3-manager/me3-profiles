@@ -22,7 +22,7 @@ game = "nightreign"  # The game slug (e.g., eldenring, nightreign, darksouls3)
 
 You will list your mods under `[[natives]]` or `[[packages]]`.
 
-- **`[[natives]]`**: Use this for **DLL mods** or mods that require direct file placement (e.g., `SeamlessCoop.dll`).
+- **`[[natives]]`**: Use this for **DLL mods** or mods that require direct file placement (e.g., `StormControl.dll`).
 - **`[[packages]]`**: Use this for **general mods** (folders, archives, texture replacements) that are loaded via ModEngine.
 
 #### Example: Adding a Mod with a Nexus Link
