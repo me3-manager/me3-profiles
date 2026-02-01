@@ -4,36 +4,61 @@ making it easy for users to install and configure mods reliably. Share your mod 
 This guide explains how to manually create lightweight `.me3` profiles using Nexus Mods links.
 
 ## 1. Creating a Profile
-You can create a `.me3` file using any text editor. The structure is simple and uses TOML format.
+
+You can create a `.me3` file using any text editor (VS Code, Notepad++, etc.). The file uses the **TOML** format.
+
+### Basic Structure
+Every profile starts with these required fields:
 
 ```toml
 profileVersion = "v1"
-description = "Storm Control with a two-part setup—config and profile, so both configurations appear in the mod config editor."
+description = "A short description of this profile (e.g., 'Hard Mode + QoL')."
+
 [[supports]]
-game = "nightreign"
-
-
-[[natives]]
-nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/146"
-config = ["Storm Control/StormControl/config.ini", "Storm Control/StormControl/profiles/NightfarerBots.ini"]
+game = "nightreign"  # The game slug (e.g., eldenring, nightreign, darksouls3)
 ```
 
-## 2. Global Settings (`Used by me3-manager`)
-- `description`: A short explanation of what your profile does. This appears in the Community Search results.
+### Adding Mods (`[[natives]]` vs `[[packages]]`)
 
-## 3. Mod Entries (`Used by me3-manager`)
-- `nexus_link`: Full URL to the Nexus mod page. ME3 Manager will prompt the user to download it.
-- `mod_folder`: (Optional) Specify which subfolder inside the downloaded archive to install.
+You will list your mods under `[[natives]]` or `[[packages]]`.
+
+- **`[[natives]]`**: Use this for **DLL mods** or mods that require direct file placement (e.g., `SeamlessCoop.dll`).
+- **`[[packages]]`**: Use this for **general mods** (folders, archives, texture replacements) that are loaded via ModEngine.
+
+#### Example: Adding a Mod with a Nexus Link
+When you include a `nexus_link`, ME3 Manager will prompt the user to download the mod if they don't have it.
+
 ```toml
 [[packages]]
 nexus_link = "https://www.nexusmods.com/eldenring/mods/541"
-mod_folder = "path/to/mod"
+mod_folder = "path/in/archive" # Optional: if the mod is inside a subfolder in the downloaded zip
 ```
 
-## 4. Submitting Your Profile
+#### Example: Exposing Config Files
+You can list configuration files so users can edit them directly in ME3 Manager.
+
+```toml
+[[natives]]
+nexus_link = "https://www.nexusmods.com/eldenring/mods/146"
+config = ["Storm Control/config.ini"]
+```
+
+## 2. Testing Your Profile Locally
+
+Before submitting your profile, you should verify it works:
+
+1.  **Save your file** as `MyProfile.me3`.
+2.  **Open ME3 Manager**.
+3.  **Drag and drop** your `.me3` file into the application window (or use the Import feature if available).
+4.  **Verify**:
+    - Does it appear in the profile list?
+    - Do the mods download correctly?
+    - Does the game launch with the mods active?
+
+## 3. Submitting Your Profile
 Contributions are welcome! Feel free to submit them via pull requests.
 
-## 5. Advanced: Custom Install Scripts
+## 4. Advanced: Custom Install Scripts
 For complex mods that require specific installation logic (like moving files, cleaning up folders, or dynamic configuration), you can bundle a Python script with your profile.
 
 ### Enabling the Script
@@ -99,7 +124,7 @@ def on_post_install(context):
 - **Safety**: Users will be prompted to approve the script before it runs.
 - **Logging**: Use `logging.getLogger(__name__)` to write to the application log.
 
-## 6. Contributing
+## 5. Contributing
 We use [uv](https://github.com/astral-sh/uv) for Python project management and [Ruff](https://github.com/astral-sh/ruff) for linting.
 
 > [!NOTE]
