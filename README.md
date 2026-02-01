@@ -49,7 +49,7 @@ Before submitting your profile, you should verify it works:
 
 1.  **Save your file** as `MyProfile.me3`.
 2.  **Open ME3 Manager**.
-3.  **Drag and drop** your `.me3` file into the application window (or use the Import feature if available).
+3.  **Drag and drop** your `.me3` file into the application window.
 4.  **Verify**:
     - Does it appear in the profile list?
     - Do the mods download correctly?
