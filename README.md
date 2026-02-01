@@ -58,7 +58,36 @@ Before submitting your profile, you should verify it works:
 ## 3. Submitting Your Profile
 Contributions are welcome! Feel free to submit them via pull requests.
 
-## 4. Advanced: Custom Install Scripts
+## 4. Advanced Configuration
+
+
+### Config Overrides
+You can modify specific settings in INI or TOML configuration files included with a mod without replacing the entire file.
+
+```toml
+[[natives]]
+nexus_link = "..."
+config = "MyMod/settings.ini"
+
+[natives.config_overrides]
+# Format: Section.Key = Value
+Gameplay.Difficulty = "Hard"
+Graphics.FOV = "110"
+```
+
+### User Prompts
+You can ask the user for input during installation, such as passwords for private servers or preference selections.
+
+```toml
+[[natives.user_prompts]]
+key = "PASSWORD.cooppassword"
+label = "Co-op Password"
+description = "Set a password to play with your friends (they need to use the same password)"
+type = "string"
+required = true
+```
+
+## 5. Advanced: Custom Install Scripts
 For complex mods that require specific installation logic (like moving files, cleaning up folders, or dynamic configuration), you can bundle a Python script with your profile.
 
 ### Enabling the Script
@@ -124,7 +153,7 @@ def on_post_install(context):
 - **Safety**: Users will be prompted to approve the script before it runs.
 - **Logging**: Use `logging.getLogger(__name__)` to write to the application log.
 
-## 5. Contributing
+## 6. Contributing
 We use [uv](https://github.com/astral-sh/uv) for Python project management and [Ruff](https://github.com/astral-sh/ruff) for linting.
 
 > [!NOTE]
