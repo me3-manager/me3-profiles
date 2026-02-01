@@ -22,7 +22,7 @@ game = "nightreign"  # The game slug (e.g., eldenring, nightreign, darksouls3)
 
 You will list your mods under `[[natives]]` or `[[packages]]`.
 
-- **`[[natives]]`**: Use this for **DLL mods** or mods that require direct file placement (e.g., `SeamlessCoop.dll`).
+- **`[[natives]]`**: Use this for **DLL mods** or mods that require direct file placement (e.g., `StormControl.dll`).
 - **`[[packages]]`**: Use this for **general mods** (folders, archives, texture replacements) that are loaded via ModEngine.
 
 #### Example: Adding a Mod with a Nexus Link
@@ -49,7 +49,7 @@ Before submitting your profile, you should verify it works:
 
 1.  **Save your file** as `MyProfile.me3`.
 2.  **Open ME3 Manager**.
-3.  **Drag and drop** your `.me3` file into the application window (or use the Import feature if available).
+3.  **Drag and drop** your `.me3` file into the application window.
 4.  **Verify**:
     - Does it appear in the profile list?
     - Do the mods download correctly?
