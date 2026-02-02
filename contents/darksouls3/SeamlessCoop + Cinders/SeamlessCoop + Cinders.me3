@@ -38,11 +38,12 @@ mod_folder = "DS3HavokCrashHelper//dist//me3"
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/310"
 nexus_file_name = "Cinders - 2.15 - Main"
 # nexus_file_id = 4737
+install_name = "Cinders Main"
 mod_folder = "Cinders"
 
 # Cinders Models
-[[packages]]
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/310"
 nexus_file_name = "Cinders - 2.15 - Models"
 # nexus_file_id = 4738
+install_name = "Cinders Models"
 mod_folder = "Cinders"
