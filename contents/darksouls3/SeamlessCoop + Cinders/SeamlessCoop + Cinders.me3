@@ -4,7 +4,6 @@ description = "SeamlessCoop with Cinders Mod (Split Install)"
 # Metadata for installation script
 # [metadata]
 # install_script = "cinders_install.py"
-
 [[natives]]
 # Seamless Co-op (Dark Souls III)
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/1895"
@@ -42,6 +41,7 @@ install_name = "Cinders Main"
 mod_folder = "Cinders"
 
 # Cinders Models
+[[packages]]
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/310"
 nexus_file_name = "Cinders - 2.15 - Models"
 # nexus_file_id = 4738
