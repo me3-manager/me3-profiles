@@ -3,7 +3,7 @@ description = "SeamlessCoop with Cinders Mod"
 
 # Metadata for installation script
 [metadata]
-install_script = "cinders_install.py"
+# install_script = "cinders_install.py"
 
 [[natives]]
 # Seamless Co-op (Dark Souls III)
@@ -31,7 +31,7 @@ config = "HoodiePatcher for v1.15.2/HoodiePatcher.ini"
 [[natives]]
 # DS3 Havok Crash Helper
 nexus_link = "https://www.nexusmods.com/darksouls3/mods/2068"
-mod_folder = "DS3HavokCrashHelper\\dist\\me3"
+mod_folder = "DS3HavokCrashHelper//dist//me3"
 
 # Cinders Main Files
 [[packages]]
