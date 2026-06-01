@@ -1,0 +1,20 @@
+profileVersion = "v1"
+description = "MMV and SoTE & DS3 weapons."
+
+[metadata]
+install_script = "mmv_install.py"
+
+[[packages]]
+# More Map Variations
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/578"
+nexus_file_name = "More Map Variations"
+
+[[packages]]
+# Sote & DS3 Weapons
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/554"
+
+[[packages]]
+# Compatibility Patch for More Weapons
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/578"
+nexus_file_name = "Compatibility Patch for More Weapons"
+
