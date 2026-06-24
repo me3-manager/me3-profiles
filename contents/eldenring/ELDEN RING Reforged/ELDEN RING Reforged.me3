@@ -1,8 +1,0 @@
-profileVersion = "v1"
-description = "Elden Ring Reforged with Install script"
-
-[metadata]
-install_script = "err_install_hook.py"
-
-[[packages]]
-nexus_link = "https://www.nexusmods.com/eldenring/mods/541"

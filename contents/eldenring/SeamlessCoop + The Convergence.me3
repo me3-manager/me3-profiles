@@ -1,0 +1,26 @@
+profileVersion = "v1"
+description = "SeamlessCoop with The Convergence Mod (Requires me3-manager v1.4.7 or later)"
+
+
+[[natives]]
+# Seamless Co-op (Elden Ring)
+nexus_link = "https://www.nexusmods.com/eldenring/mods/510"
+config = "Seamless Co-op (Elden Ring)/SeamlessCoop/ersc_settings.ini"
+
+# override some settings in ersc_settings.ini
+[natives.config_overrides]
+GAMEPLAY.allow_invaders = 0
+
+# Let the user set the password during installation
+[[natives.user_prompts]]
+key = "PASSWORD.cooppassword"
+label = "Co-op Password"
+description = "Set a password to play with your friends (they need to use the same password)"
+type = "string"
+required = true
+
+
+[[packages]]
+# The Convergence
+nexus_link = "https://www.nexusmods.com/eldenring/mods/3419"
+nexus_category = "MAIN"
