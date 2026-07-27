@@ -1,0 +1,7 @@
+profileVersion = "v1"
+description = "MMV and SoTE & DS3 weapons + Server Redirector."
+
+[[packages]]
+# More Map Variations and Weapons Mod Merge
+nexus_link = "https://www.nexusmods.com/eldenringnightreign/mods/578"
+nexus_file_name = "More Map Variations and Weapons Mod Merge"
